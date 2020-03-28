@@ -25,6 +25,9 @@
 /* USER CODE BEGIN Includes */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 339e93f... Dodano bibliotekę obsługującą ekran LCD.
 #include "lis3dsh.h"
 #include "ili9341.h"
 
