@@ -26,6 +26,7 @@
 
 #include "lis3dsh.h"
 #include "ili9341.h"
+#include <stdlib.h>
 
 /* USER CODE END Includes */
 
@@ -47,13 +48,17 @@
 SPI_HandleTypeDef hspi1;
 SPI_HandleTypeDef hspi3;
 
+TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim4;
+TIM_HandleTypeDef htim5;
 
 /* USER CODE BEGIN PV */
 
 float accX, accY, accZ, out[4];
 uint16_t val1, val2, val3, val4;
 uint16_t butt1=0,butt2=0,butt3=0,butt4=0;
+int time=0;
+char cstr[16];
 
 /* USER CODE END PV */
 
@@ -63,6 +68,8 @@ static void MX_GPIO_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_SPI3_Init(void);
 static void MX_TIM4_Init(void);
+static void MX_TIM5_Init(void);
+static void MX_TIM3_Init(void);
 /* USER CODE BEGIN PFP */
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
@@ -109,6 +116,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 			if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) == GPIO_PIN_SET)
 				butt4++;
 		}
+	if(htim->Instance== TIM3){
+		time++;
+		itoa(time, cstr, 10);
+		ILI9341_WriteString(100, 100, cstr, Font_7x10, ILI9341_BLACK, ILI9341_WHITE);
+	}
 }
 
 /* USER CODE END PFP */
@@ -149,14 +161,19 @@ int main(void)
   MX_SPI1_Init();
   MX_SPI3_Init();
   MX_TIM4_Init();
+  MX_TIM5_Init();
+  MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim4);
+
 
   ILI9341_Unselect();
 
   LISInit();
   ILI9341_Init();
   ILI9341_FillScreen(ILI9341_MAGENTA);
+
+  HAL_TIM_Base_Start_IT(&htim3);
 
   /* USER CODE END 2 */
 
@@ -294,6 +311,51 @@ static void MX_SPI3_Init(void)
 }
 
 /**
+  * @brief TIM3 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM3_Init(void)
+{
+
+  /* USER CODE BEGIN TIM3_Init 0 */
+
+  /* USER CODE END TIM3_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM3_Init 1 */
+
+  /* USER CODE END TIM3_Init 1 */
+  htim3.Instance = TIM3;
+  htim3.Init.Prescaler = 839;
+  htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim3.Init.Period = 999;
+  htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim3, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM3_Init 2 */
+
+  /* USER CODE END TIM3_Init 2 */
+
+}
+
+/**
   * @brief TIM4 Initialization Function
   * @param None
   * @retval None
@@ -335,6 +397,51 @@ static void MX_TIM4_Init(void)
   /* USER CODE BEGIN TIM4_Init 2 */
 
   /* USER CODE END TIM4_Init 2 */
+
+}
+
+/**
+  * @brief TIM5 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM5_Init(void)
+{
+
+  /* USER CODE BEGIN TIM5_Init 0 */
+
+  /* USER CODE END TIM5_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM5_Init 1 */
+
+  /* USER CODE END TIM5_Init 1 */
+  htim5.Instance = TIM5;
+  htim5.Init.Prescaler = 524;
+  htim5.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim5.Init.Period = 399;
+  htim5.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim5.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim5) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim5, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim5, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM5_Init 2 */
+
+  /* USER CODE END TIM5_Init 2 */
 
 }
 
