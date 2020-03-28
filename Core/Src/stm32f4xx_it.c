@@ -89,9 +89,6 @@ void HardFault_Handler(void)
   {
     /* USER CODE BEGIN W1_HardFault_IRQn 0 */
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 339e93f... Dodano bibliotekę obsługującą ekran LCD.
 	  printf('ave');
     /* USER CODE END W1_HardFault_IRQn 0 */
   }

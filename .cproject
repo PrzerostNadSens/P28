@@ -204,5 +204,8 @@
 			<autodiscovery enabled="false" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 	</storageModule>
+<<<<<<< HEAD
 	<storageModule moduleId="refreshScope"/>
+=======
+>>>>>>> refs/remotes/origin/master
 </cproject>
