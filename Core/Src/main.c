@@ -65,6 +65,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	HAL_GPIO_TogglePin(GPIOD,GPIO_PIN_12);
 	ILI9341_FillScreen(ILI9341_BLUE);
+	ILI9341_WriteString(10, 10, "Witam serdecznie", Font_7x10, ILI9341_BLACK, ILI9341_WHITE);
 }
 
 /* USER CODE END PFP */
@@ -105,6 +106,7 @@ int main(void)
   MX_SPI1_Init();
   MX_SPI3_Init();
   /* USER CODE BEGIN 2 */
+  ILI9341_Unselect();
 
   LISInit();
   ILI9341_Init();
