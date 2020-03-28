@@ -58,15 +58,12 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-<<<<<<< HEAD
 #define LCD_CS_Pin GPIO_PIN_4
 #define LCD_CS_GPIO_Port GPIOE
 #define LCD_RST_Pin GPIO_PIN_5
 #define LCD_RST_GPIO_Port GPIOE
 #define LCD_DC_Pin GPIO_PIN_6
 #define LCD_DC_GPIO_Port GPIOE
-=======
->>>>>>> refs/remotes/origin/master
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
